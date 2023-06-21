@@ -1,0 +1,36 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Buy Now{% endblock title %}
+{% block main-content %}
+<div class="container my-5">
+ <div class="row">
+ <h3>Welcome {{user.username|capfirst}}</h3>
+  <div class="col-sm-2 border-end">
+   <ul class="list-unstyled">
+    <li class="d-grid"><a href="#" class="btn btn-primary">Orders</a></li>
+   </ul>
+  </div>
+  <div class="col-sm-9 offset-sm-1">
+   <div class="row">
+    {% for k in order_obj %}
+    <div class="col-sm-6 shadow px-4 mb-5 p-3">
+      <img src="{{k.product.image.url}}" style="width: 130px; height: 130px;">
+       <h6> {{k.product.title| truncatechars:35}} </h6>
+       <p> Rs - {{k.tot_cost}}
+         {% if k.status == 'On The Way' %}
+            <p>Status - On the way</p>
+            {%elif k.status == 'delivered' %}
+               <p>status -  Delivered</p>
+            {% elif k.status == 'cancelled' %}
+               <p> status - cancelled </p>
+         {% else %}
+            <p>status - pending</p>
+         {%endif %}
+
+    </div>
+   {% endfor %}
+   </div>
+  </div>
+ </div>
+</div>
+{% endblock main-content %}
